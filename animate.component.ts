@@ -57,7 +57,7 @@ export class AnimateComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (this.actionQueue != null &&
-      this.actionQueue.length != 0) {
+      this.actionQueue.length !== 0) {
       this.startAnimationQueue();
     }
   }
@@ -81,13 +81,13 @@ export class AnimateComponent implements OnChanges {
   }
 
   private setDisplayed(): void {
-    if (AnimateActionAlias.getItem(this.actionValue) == AnimateActionEnum.Visible || this.display != false) {
+    if (AnimateActionAlias.getItem(this.actionValue) === AnimateActionEnum.Visible || this.display !== false) {
       this.displayed = true;
     }
   }
 
   private setNotDisplayed(): void {
-    if (AnimateActionAlias.getItem(this.actionValue) == AnimateActionEnum.Hidden && this.display == false) {
+    if (AnimateActionAlias.getItem(this.actionValue) === AnimateActionEnum.Hidden && !this.display) {
       this.displayed = false;
     }
   }
@@ -102,7 +102,7 @@ export class AnimateComponent implements OnChanges {
 
   private emitVisibility($event: AnimationEvent): void {
     this.done.emit($event);
-    if (AnimateActionAlias.getItem(this.actionValue) == AnimateActionEnum.Hidden) {
+    if (AnimateActionAlias.getItem(this.actionValue) === AnimateActionEnum.Hidden) {
       this.onHidden.emit($event);
     } else {
       this.onShown.emit($event);
