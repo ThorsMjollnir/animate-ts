@@ -5,7 +5,7 @@ import {ANIMATION_DURATION} from './animate.config';
 export class AnimateZooms {
   static get animations(): ReadonlyArray<AnimationTransitionMetadata> {
     return [
-      transition(AnimateActionEnum.Hidden.toString() + '=>' + AnimateActionEnum.ZoomIn.toString(), [
+      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.ZoomIn, [
         animate(ANIMATION_DURATION, keyframes([
           style({opacity: 0, transform: 'scale(0)'}),
           style({opacity: 1, transform: 'scale(1.1)'}),

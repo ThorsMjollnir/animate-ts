@@ -8,7 +8,7 @@ import {
 export class AnimateBounces {
   static get animations(): ReadonlyArray<AnimationTransitionMetadata> {
     return [
-      transition(AnimateActionEnum.Hidden.toString() + '=>' + AnimateActionEnum.BounceInUp.toString(), [
+      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInUp, [
         animate(ANIMATION_DURATION, keyframes([
           style({opacity: 0, transform: 'translateY(' + FADE_START_OFFSET + ')', offset: 0}),
           style({
@@ -20,7 +20,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Hidden.toString() + '=>' + AnimateActionEnum.BounceInUpBig.toString(), [
+      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInUpBig, [
         animate(ANIMATION_BIG_DURATION, keyframes([
           style({opacity: 0, transform: 'translateY(' + FADE_BIG_START_OFFSET + ')', offset: 0}),
           style({
@@ -32,7 +32,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Hidden.toString() + '=>' + AnimateActionEnum.BounceInDown.toString(), [
+      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInDown, [
         animate(ANIMATION_DURATION, keyframes([
           style({opacity: 0, transform: 'translateY(-' + FADE_START_OFFSET + ')', offset: 0}),
           style({
@@ -44,7 +44,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Hidden.toString() + '=>' + AnimateActionEnum.BounceInDownBig.toString(), [
+      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInDownBig, [
         animate(ANIMATION_BIG_DURATION, keyframes([
           style({opacity: 0, transform: 'translateY(-' + FADE_BIG_START_OFFSET + ')', offset: 0}),
           style({
@@ -56,7 +56,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Hidden.toString() + '=>' + AnimateActionEnum.BounceInLeft.toString(), [
+      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInLeft, [
         animate(ANIMATION_DURATION, keyframes([
           style({opacity: 0, transform: 'translateX(-' + FADE_START_OFFSET + ')', offset: 0}),
           style({
@@ -68,7 +68,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Hidden.toString() + '=>' + AnimateActionEnum.BounceInLeftBig.toString(), [
+      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInLeftBig, [
         animate(ANIMATION_BIG_DURATION, keyframes([
           style({opacity: 0, transform: 'translateX(-' + FADE_BIG_START_OFFSET + ')', offset: 0}),
           style({
@@ -80,7 +80,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Visible.toString() + '=>' + AnimateActionEnum.BounceOutLeft.toString(), [
+      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutLeft, [
         animate(ANIMATION_DURATION, keyframes([
           style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
           style({
@@ -92,7 +92,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Visible.toString() + '=>' + AnimateActionEnum.BounceOutUp.toString(), [
+      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutUp, [
         animate(ANIMATION_DURATION, keyframes([
           style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
           style({
@@ -104,7 +104,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Visible.toString() + '=>' + AnimateActionEnum.BounceOutDown.toString(), [
+      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutDown, [
         animate(ANIMATION_DURATION, keyframes([
           style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
           style({
@@ -116,7 +116,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Visible.toString() + '=>' + AnimateActionEnum.BounceOutDownBig.toString(), [
+      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutDownBig, [
         animate(ANIMATION_BIG_DURATION, keyframes([
           style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
           style({
@@ -128,7 +128,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Visible.toString() + '=>' + AnimateActionEnum.BounceOutLeftBig.toString(), [
+      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutLeftBig, [
         animate(ANIMATION_BIG_DURATION, keyframes([
           style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
           style({
@@ -140,7 +140,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Hidden.toString() + '=>' + AnimateActionEnum.BounceInRight.toString(), [
+      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInRight, [
         animate(ANIMATION_DURATION, keyframes([
           style({opacity: 0, transform: 'translateX(' + FADE_START_OFFSET + ')', offset: 0}),
           style({
@@ -152,7 +152,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Hidden.toString() + '=>' + AnimateActionEnum.BounceInRightBig.toString(), [
+      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInRightBig, [
         animate(ANIMATION_BIG_DURATION, keyframes([
           style({opacity: 0, transform: 'translateX(' + FADE_BIG_START_OFFSET + ')', offset: 0}),
           style({
@@ -164,7 +164,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Visible.toString() + '=>' + AnimateActionEnum.BounceOutRight.toString(), [
+      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutRight, [
         animate(ANIMATION_DURATION, keyframes([
           style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
           style({
@@ -176,7 +176,7 @@ export class AnimateBounces {
         ]))
       ]),
 
-      transition(AnimateActionEnum.Visible.toString() + '=>' + AnimateActionEnum.BounceOutRightBig.toString(), [
+      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutRightBig, [
         animate(ANIMATION_BIG_DURATION, keyframes([
           style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
           style({

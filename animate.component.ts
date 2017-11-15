@@ -7,8 +7,8 @@ import {AnimateFades} from './animate-fades.class';
 import {AnimateZooms} from './animate-zooms.class';
 
 export const AnimateTransitions = [
-  state(AnimateActionEnum.Visible.toString(), style({opacity: 1})),
-  state(AnimateActionEnum.Hidden.toString(), style({opacity: 0})),
+  state(AnimateActionEnum.Visible, style({opacity: 1})),
+  state(AnimateActionEnum.Hidden, style({opacity: 0})),
 ];
 
 AnimateTransitions.push.apply(AnimateTransitions, AnimateBounces.animations);
