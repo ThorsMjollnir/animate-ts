@@ -14,6 +14,7 @@ export enum AnimateActionEnum {
 
   FadeOut = 'FadeOut',
   FadeOutUp = 'FadeOutUp',
+  FadeOutUpBig = 'FadeOutUpBig',
   FadeOutDown = 'FadeOutDown',
   FadeOutDownBig = 'FadeOutDownBig',
   FadeOutLeft = 'FadeOutLeft',

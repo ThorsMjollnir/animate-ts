@@ -1,19 +1,31 @@
-import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges} from '@angular/core';
-import {trigger, state, style, AnimationEvent} from '@angular/animations';
-import {AnimateActionEnum, AnimateActionAlias} from './animate-action.enum';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {AnimationEvent, state, style, trigger} from '@angular/animations';
+import {AnimateActionAlias, AnimateActionEnum} from './animate-action.enum';
 import {AnimateFrame} from './animate-frame.class';
-import {AnimateBounces} from './animate-bounces.class';
 import {AnimateFades} from './animate-fades.class';
-import {AnimateZooms} from './animate-zooms.class';
 
 export const AnimateTransitions = [
   state(AnimateActionEnum.Visible, style({opacity: 1})),
   state(AnimateActionEnum.Hidden, style({opacity: 0})),
+  AnimateFades.FadeIn,
+  AnimateFades.FadeInUp,
+  AnimateFades.FadeInUpBig,
+  AnimateFades.FadeInRight,
+  AnimateFades.FadeInRightBig,
+  AnimateFades.FadeInDown,
+  AnimateFades.FadeInDownBig,
+  AnimateFades.FadeInLeft,
+  AnimateFades.FadeInLeftBig,
+  AnimateFades.FadeOut,
+  AnimateFades.FadeOutUp,
+  AnimateFades.FadeOutUpBig,
+  AnimateFades.FadeOutRight,
+  AnimateFades.FadeOutRightBig,
+  AnimateFades.FadeOutDown,
+  AnimateFades.FadeOutDownBig,
+  AnimateFades.FadeOutLeft,
+  AnimateFades.FadeOutLeftBig,
 ];
-
-AnimateTransitions.push.apply(AnimateTransitions, AnimateBounces.animations);
-AnimateTransitions.push.apply(AnimateTransitions, AnimateFades.animations);
-AnimateTransitions.push.apply(AnimateTransitions, AnimateZooms.animations);
 
 @Component({
   selector: 'anm',
