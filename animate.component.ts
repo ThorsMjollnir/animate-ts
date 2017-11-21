@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ChangeDetectorRef
+} from '@angular/core';
 import {AnimationEvent, state, style, trigger} from '@angular/animations';
 import {AnimateActionAlias, AnimateActionEnum} from './animate-action.enum';
 import {AnimateFrame} from './animate-frame.class';
@@ -36,8 +44,9 @@ export const AnimateTransitions = [
   ]
 })
 
-export class AnimateComponent implements OnChanges {
+export class AnimateComponent implements OnInit {
 
+  _actionQueue: AnimateFrame[] | undefined;
   actionValue: AnimateActionEnum | undefined;
 
   @Input()
@@ -52,8 +61,19 @@ export class AnimateComponent implements OnChanges {
     this.actionChange.emit(this.actionValue);
   }
 
+  @Input()
+  get actionQueue(): AnimateFrame[] | undefined {
+    return this._actionQueue;
+  }
 
-  @Input() actionQueue: AnimateFrame[];
+  @Output() actionQueueChange = new EventEmitter();
+
+  set actionQueue(act: AnimateFrame[] | undefined) {
+    this._actionQueue = act;
+    this.actionQueueChange.emit(this.actionValue);
+    this.startAnimationQueue();
+  }
+
   @Input() display: boolean;
 
   @Output() started: EventEmitter<any> = new EventEmitter();
@@ -64,14 +84,11 @@ export class AnimateComponent implements OnChanges {
 
   displayed: boolean;
 
-  constructor() {
+  constructor(private changeDetector: ChangeDetectorRef) {
   }
 
-  ngOnChanges(): void {
-    if (this.actionQueue != null &&
-      this.actionQueue.length !== 0) {
-      this.startAnimationQueue();
-    }
+  ngOnInit(): void {
+
   }
 
   emitStarted($event: AnimationEvent): void {
@@ -86,9 +103,19 @@ export class AnimateComponent implements OnChanges {
   }
 
   private startAnimationQueue(): void {
-    const nextFrame = this.actionQueue.shift();
-    if (nextFrame != null) {
-      this.action = nextFrame.action;
+    if (this.actionQueue != null &&
+      this.actionQueue.length !== 0) {
+      const nextFrame = this.actionQueue.shift();
+      if (nextFrame != null) {
+        if (nextFrame instanceof AnimateFrame) {
+          setTimeout(() => {
+            this.action = nextFrame.action;
+            this.changeDetector.markForCheck();
+          }, nextFrame.timeout || 0);
+        } else {
+          this.action = nextFrame;
+        }
+      }
     }
   }
 

@@ -4,129 +4,76 @@ import {ANIMATION_DURATION, FADE_START_OFFSET, ANIMATION_BIG_DURATION, FADE_BIG_
 
 export class AnimateFades {
 
-  static FadeIn = transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.FadeIn, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 0, offset: 0}),
-      style({opacity: 1, offset: 1.0})
-    ]))
-  ]);
+  static FadeIn = AnimateFades.fadeFactory('void =>' + AnimateActionEnum.FadeIn,
+    {opacity: 0, offset: 0}, {opacity: 1, offset: 1.0}, ANIMATION_DURATION);
 
-  static FadeInUp = transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.FadeInUp, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 0, transform: 'translateY(' + FADE_START_OFFSET + ')', offset: 0}),
-      style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-    ]))
-  ]);
+  static FadeInUp = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInUp, 'Y', false, false);
 
-  static FadeInUpBig = transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.FadeInUpBig, [
-    animate(ANIMATION_BIG_DURATION, keyframes([
-      style({opacity: 0, transform: 'translateY(' + FADE_BIG_START_OFFSET + ')', offset: 0}),
-      style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-    ]))
-  ]);
+  static FadeInUpBig = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInUpBig, 'Y', false, true);
 
-  static FadeInDown = transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.FadeInDown, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 0, transform: 'translateY(-' + FADE_START_OFFSET + ')', offset: 0}),
-      style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-    ]))
-  ]);
+  static FadeInRight = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInRight, 'X', false, false);
 
-  static FadeInDownBig = transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.FadeInDownBig, [
-    animate(ANIMATION_BIG_DURATION, keyframes([
-      style({opacity: 0, transform: 'translateY(-' + FADE_BIG_START_OFFSET + ')', offset: 0}),
-      style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-    ]))
-  ]);
+  static FadeInRightBig = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInRightBig, 'X', false, true);
 
-  static FadeInLeft = transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.FadeInLeft, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 0, transform: 'translateX(-' + FADE_START_OFFSET + ')', offset: 0}),
-      style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-    ]))
-  ]);
+  static FadeInDown = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInDown, 'Y', true, false);
 
-  static FadeInLeftBig = transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.FadeInLeftBig, [
-    animate(ANIMATION_BIG_DURATION, keyframes([
-      style({opacity: 0, transform: 'translateX(-' + FADE_BIG_START_OFFSET + ')', offset: 0}),
-      style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-    ]))
-  ]);
+  static FadeInDownBig = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInDownBig, 'Y', true, true);
 
-  static FadeOut = transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.FadeOut, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 1, offset: 0}),
-      style({opacity: 0, offset: 1.0})
-    ]))
-  ]);
+  static FadeInLeft = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInLeft, 'X', true, false);
 
-  static FadeOutLeft = transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.FadeOutLeft, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-      style({opacity: 0, transform: 'translateX(-' + FADE_START_OFFSET + ')', offset: 1.0})
-    ]))
-  ]);
+  static FadeInLeftBig = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInLeftBig, 'X', true, true);
 
-  static FadeOutUp = transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.FadeOutUp, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-      style({opacity: 0, transform: 'translateY(-' + FADE_START_OFFSET + ')', offset: 1.0})
-    ]))
-  ]);
+  static FadeOut = AnimateFades.fadeFactory('void =>' + AnimateActionEnum.FadeOut,
+    {opacity: 1, offset: 0}, {opacity: 0, offset: 1.0}, ANIMATION_DURATION);
 
-  static FadeOutUpBig = transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.FadeOutUpBig, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-      style({opacity: 0, transform: 'translateY(-' + FADE_BIG_START_OFFSET + ')', offset: 1.0})
-    ]))
-  ]);
+  static FadeOutUp = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutUp, 'Y', true, false);
 
-  static FadeOutDown = transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.FadeOutDown, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-      style({opacity: 0, transform: 'translateY(' + FADE_START_OFFSET + ')', offset: 1.0})
-    ]))
-  ]);
+  static FadeOutUpBig = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutUp, 'Y', true, true);
 
-  static FadeOutDownBig = transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.FadeOutDownBig, [
-    animate(ANIMATION_BIG_DURATION, keyframes([
-      style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-      style({opacity: 0, transform: 'translateY(' + FADE_BIG_START_OFFSET + ')', offset: 1.0})
-    ]))
-  ]);
+  static FadeOutDown = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutDown, 'Y', false, false);
 
-  static FadeOutLeftBig = transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.FadeOutLeftBig, [
-    animate(ANIMATION_BIG_DURATION, keyframes([
-      style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-      style({opacity: 0, transform: 'translateX(-' + FADE_BIG_START_OFFSET + ')', offset: 1.0})
-    ]))
-  ]);
+  static FadeOutDownBig = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutDownBig, 'Y', false, true);
 
-  static FadeInRight = transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.FadeInRight, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 0, transform: 'translateX(' + FADE_START_OFFSET + ')', offset: 0}),
-      style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-    ]))
-  ]);
+  static FadeOutLeft = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutLeft, 'X', true, false);
 
-  static FadeInRightBig = transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.FadeInRightBig, [
-    animate(ANIMATION_BIG_DURATION, keyframes([
-      style({opacity: 0, transform: 'translateX(' + FADE_BIG_START_OFFSET + ')', offset: 0}),
-      style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-    ]))
-  ]);
+  static FadeOutLeftBig = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutLeftBig, 'X', true, true);
 
-  static FadeOutRight = transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.FadeOutRight, [
-    animate(ANIMATION_DURATION, keyframes([
-      style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-      style({opacity: 0, transform: 'translateX(' + FADE_START_OFFSET + ')', offset: 1.0})
-    ]))
-  ]);
+  static FadeOutRight = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutRight, 'X', false, false);
 
-  static FadeOutRightBig = transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.FadeOutRightBig, [
-    animate(ANIMATION_BIG_DURATION, keyframes([
-      style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-      style({opacity: 0, transform: 'translateX(' + FADE_BIG_START_OFFSET + ')', offset: 1.0})
-    ]))
-  ]);
+  static FadeOutRightBig = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutRightBig, 'X', false, true);
+
+  private static fadeInFactory(animation: AnimateActionEnum, axis: string, translateOffsetNegative: boolean,
+                               translateOffsetBig: boolean) {
+    return AnimateFades.fadeFactory(
+      '*=>' + animation,
+      {
+        opacity: 0,
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') +
+        (translateOffsetBig ? FADE_BIG_START_OFFSET : FADE_START_OFFSET) + ')',
+        offset: 0
+      },
+      {opacity: 1, transform: 'translate(0,0)', offset: 1.0},
+      translateOffsetBig ? ANIMATION_BIG_DURATION : ANIMATION_DURATION
+    );
+  }
+
+  private static fadeOutFactory(animation: AnimateActionEnum, axis: string, translateOffsetNegative: boolean,
+                                translateOffsetBig: boolean) {
+    return AnimateFades.fadeFactory(
+      '*=>' + animation,
+      {opacity: 1, transform: 'translate(0,0)', offset: 0},
+      {
+        opacity: 0,
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') +
+        (translateOffsetBig ? FADE_BIG_START_OFFSET : FADE_START_OFFSET) + ')',
+        offset: 1.0
+      },
+      translateOffsetBig ? ANIMATION_BIG_DURATION : ANIMATION_DURATION
+    );
+  }
+
+  private static fadeFactory(expr: string, from: any, to: any, animationDuration: number) {
+    return transition(expr, [animate(animationDuration, keyframes([style(from), style(to)]))]);
+  }
+
 }
