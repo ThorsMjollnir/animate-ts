@@ -11,28 +11,29 @@ import {AnimationEvent, state, style, trigger} from '@angular/animations';
 import {AnimateActionAlias, AnimateActionEnum} from './animate-action.enum';
 import {AnimateFrame} from './animate-frame.class';
 import {AnimateFades} from './animate-fades.class';
+import {ANIMATION_BIG_DURATION, ANIMATION_DURATION, FADE_BIG_START_OFFSET, FADE_START_OFFSET} from "./animate.config";
 
 export const AnimateTransitions = [
   state(AnimateActionEnum.Visible, style({opacity: 1})),
   state(AnimateActionEnum.Hidden, style({opacity: 0})),
-  AnimateFades.FadeIn,
-  AnimateFades.FadeInUp,
-  AnimateFades.FadeInUpBig,
-  AnimateFades.FadeInRight,
-  AnimateFades.FadeInRightBig,
-  AnimateFades.FadeInDown,
-  AnimateFades.FadeInDownBig,
-  AnimateFades.FadeInLeft,
-  AnimateFades.FadeInLeftBig,
-  AnimateFades.FadeOut,
-  AnimateFades.FadeOutUp,
-  AnimateFades.FadeOutUpBig,
-  AnimateFades.FadeOutRight,
-  AnimateFades.FadeOutRightBig,
-  AnimateFades.FadeOutDown,
-  AnimateFades.FadeOutDownBig,
-  AnimateFades.FadeOutLeft,
-  AnimateFades.FadeOutLeftBig,
+  AnimateFades.fadeIn('* => ' + AnimateActionEnum.FadeIn, ANIMATION_DURATION),
+  AnimateFades.fadeInUp('* => ' + AnimateActionEnum.FadeInUp, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFades.fadeInUp('* => ' + AnimateActionEnum.FadeInUpBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFades.fadeInRight('* => ' + AnimateActionEnum.FadeInRight, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFades.fadeInRight('* => ' + AnimateActionEnum.FadeInRightBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFades.fadeInDown('* => ' + AnimateActionEnum.FadeInDown, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFades.fadeInDown('* => ' + AnimateActionEnum.FadeInDownBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFades.fadeInLeft('* => ' + AnimateActionEnum.FadeInLeft, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFades.fadeInLeft('* => ' + AnimateActionEnum.FadeInLeftBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFades.fadeOut('* => ' + AnimateActionEnum.FadeOut, ANIMATION_DURATION),
+  AnimateFades.fadeOutUp('* => ' + AnimateActionEnum.FadeOutUp, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFades.fadeOutUp('* => ' + AnimateActionEnum.FadeOutUpBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFades.fadeOutRight('* => ' + AnimateActionEnum.FadeOutRight, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFades.fadeOutRight('* => ' + AnimateActionEnum.FadeOutRightBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFades.fadeOutDown('* => ' + AnimateActionEnum.FadeOutDown, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFades.fadeOutDown('* => ' + AnimateActionEnum.FadeOutDownBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFades.fadeOutLeft('* => ' + AnimateActionEnum.FadeOutLeft, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFades.fadeOutLeft('* => ' + AnimateActionEnum.FadeOutLeftBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
 ];
 
 @Component({
@@ -70,7 +71,7 @@ export class AnimateComponent implements OnInit {
 
   set actionQueue(act: AnimateFrame[] | undefined) {
     this._actionQueue = act;
-    this.actionQueueChange.emit(this.actionValue);
+    this.actionQueueChange.emit(this.action);
     this.startAnimationQueue();
   }
 
@@ -82,6 +83,9 @@ export class AnimateComponent implements OnInit {
   @Output() onShown: EventEmitter<any> = new EventEmitter();
   @Output() onHidden: EventEmitter<any> = new EventEmitter();
 
+  @Output() beforeShown: EventEmitter<any> = new EventEmitter();
+  @Output() beforeHidden: EventEmitter<any> = new EventEmitter();
+
   displayed: boolean;
 
   constructor(private changeDetector: ChangeDetectorRef) {
@@ -92,8 +96,8 @@ export class AnimateComponent implements OnInit {
   }
 
   emitStarted($event: AnimationEvent): void {
+    this.emitBeforeVisibility($event);
     this.setDisplayed();
-    this.started.emit($event);
   }
 
   emitDone($event: AnimationEvent): void {
@@ -120,13 +124,13 @@ export class AnimateComponent implements OnInit {
   }
 
   private setDisplayed(): void {
-    if (AnimateActionAlias.getItem(this.actionValue) === AnimateActionEnum.Visible || this.display !== false) {
+    if (AnimateActionAlias.getItem(this.action) === AnimateActionEnum.Visible || this.display !== false) {
       this.displayed = true;
     }
   }
 
   private setNotDisplayed(): void {
-    if (AnimateActionAlias.getItem(this.actionValue) === AnimateActionEnum.Hidden && !this.display) {
+    if (AnimateActionAlias.getItem(this.action) === AnimateActionEnum.Hidden && !this.display) {
       this.displayed = false;
     }
   }
@@ -135,13 +139,22 @@ export class AnimateComponent implements OnInit {
     if (this.actionQueue != null && this.actionQueue.length > 0) {
       this.startAnimationQueue();
     } else {
-      this.action = AnimateActionAlias.getItem(this.actionValue);
+      this.action = AnimateActionAlias.getItem(this.action);
     }
+  }
+
+  private emitBeforeVisibility($event: AnimationEvent): void {
+    if (AnimateActionAlias.getItem(this.action) === AnimateActionEnum.Hidden) {
+      this.beforeHidden.emit($event);
+    } else {
+      this.beforeShown.emit($event);
+    }
+    this.started.emit($event);
   }
 
   private emitVisibility($event: AnimationEvent): void {
     this.done.emit($event);
-    if (AnimateActionAlias.getItem(this.actionValue) === AnimateActionEnum.Hidden) {
+    if (AnimateActionAlias.getItem(this.action) === AnimateActionEnum.Hidden) {
       this.onHidden.emit($event);
     } else {
       this.onShown.emit($event);

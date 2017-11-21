@@ -1,79 +1,77 @@
-import {AnimationTransitionMetadata, transition, animate, keyframes, style} from '@angular/animations';
-import {AnimateActionEnum} from './animate-action.enum';
-import {ANIMATION_DURATION, FADE_START_OFFSET, ANIMATION_BIG_DURATION, FADE_BIG_START_OFFSET} from './animate.config';
+import {animate, keyframes, style, transition} from '@angular/animations';
+import {ANIMATION_DURATION, FADE_START_OFFSET} from './animate.config';
 
 export class AnimateFades {
 
-  static FadeIn = AnimateFades.fadeFactory('void =>' + AnimateActionEnum.FadeIn,
-    {opacity: 0, offset: 0}, {opacity: 1, offset: 1.0}, ANIMATION_DURATION);
+  static fadeIn(expr: string, duration: number) {
+    return AnimateFades.fadeFactory(expr, {opacity: 0, offset: 0}, {opacity: 1, offset: 1.0}, duration);
+  }
 
-  static FadeInUp = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInUp, 'Y', false, false);
+  static fadeInUp(expr: string, translateOffset: string, duration: number) {
+    return AnimateFades.fadeInFactory(expr, 'Y', false, translateOffset, duration);
+  }
 
-  static FadeInUpBig = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInUpBig, 'Y', false, true);
+  static fadeInRight(expr: string, translateOffset: string, duration: number) {
+    return AnimateFades.fadeInFactory(expr, 'X', false, translateOffset, duration);
+  }
 
-  static FadeInRight = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInRight, 'X', false, false);
+  static fadeInDown(expr: string, translateOffset: string, duration: number) {
+    return AnimateFades.fadeInFactory(expr, 'Y', true, translateOffset, duration);
+  }
 
-  static FadeInRightBig = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInRightBig, 'X', false, true);
+  static fadeInLeft(expr: string, translateOffset: string, duration: number) {
+    return AnimateFades.fadeInFactory(expr, 'X', true, translateOffset, duration);
+  }
 
-  static FadeInDown = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInDown, 'Y', true, false);
+  static fadeOut(expr: string, duration: number) {
+    return AnimateFades.fadeFactory(expr, {opacity: 1, offset: 0}, {opacity: 0, offset: 1.0}, duration);
+  }
 
-  static FadeInDownBig = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInDownBig, 'Y', true, true);
+  static fadeOutUp(expr: string, translateOffset: string, duration: number) {
+    return AnimateFades.fadeOutFactory(expr, 'Y', true, translateOffset, duration);
+  }
 
-  static FadeInLeft = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInLeft, 'X', true, false);
+  static fadeOutDown(expr: string, translateOffset: string, duration: number) {
+    return AnimateFades.fadeOutFactory(expr, 'Y', false, translateOffset, duration);
+  }
 
-  static FadeInLeftBig = AnimateFades.fadeInFactory(AnimateActionEnum.FadeInLeftBig, 'X', true, true);
+  static fadeOutLeft(expr: string, translateOffset: string, duration: number) {
+    return AnimateFades.fadeOutFactory(expr, 'X', true, translateOffset, duration);
+  }
 
-  static FadeOut = AnimateFades.fadeFactory('void =>' + AnimateActionEnum.FadeOut,
-    {opacity: 1, offset: 0}, {opacity: 0, offset: 1.0}, ANIMATION_DURATION);
+  static fadeOutRight(expr: string, translateOffset: string, duration: number) {
+    return AnimateFades.fadeOutFactory(expr, 'X', false, translateOffset, duration);
+  }
 
-  static FadeOutUp = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutUp, 'Y', true, false);
-
-  static FadeOutUpBig = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutUp, 'Y', true, true);
-
-  static FadeOutDown = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutDown, 'Y', false, false);
-
-  static FadeOutDownBig = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutDownBig, 'Y', false, true);
-
-  static FadeOutLeft = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutLeft, 'X', true, false);
-
-  static FadeOutLeftBig = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutLeftBig, 'X', true, true);
-
-  static FadeOutRight = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutRight, 'X', false, false);
-
-  static FadeOutRightBig = AnimateFades.fadeOutFactory(AnimateActionEnum.FadeOutRightBig, 'X', false, true);
-
-  private static fadeInFactory(animation: AnimateActionEnum, axis: string, translateOffsetNegative: boolean,
-                               translateOffsetBig: boolean) {
-    return AnimateFades.fadeFactory(
-      '*=>' + animation,
+  private static fadeInFactory(expr: string, axis: string, translateOffsetNegative: boolean,
+                               translateOffset: string, duration: number) {
+    return AnimateFades.fadeFactory(expr,
       {
         opacity: 0,
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') +
-        (translateOffsetBig ? FADE_BIG_START_OFFSET : FADE_START_OFFSET) + ')',
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + translateOffset + ')',
         offset: 0
       },
       {opacity: 1, transform: 'translate(0,0)', offset: 1.0},
-      translateOffsetBig ? ANIMATION_BIG_DURATION : ANIMATION_DURATION
+      duration
     );
   }
 
-  private static fadeOutFactory(animation: AnimateActionEnum, axis: string, translateOffsetNegative: boolean,
-                                translateOffsetBig: boolean) {
-    return AnimateFades.fadeFactory(
-      '*=>' + animation,
+  private static fadeOutFactory(expr, axis: string, translateOffsetNegative: boolean,
+                                translateOffset: string = FADE_START_OFFSET,
+                                duration: number = ANIMATION_DURATION) {
+    return AnimateFades.fadeFactory(expr,
       {opacity: 1, transform: 'translate(0,0)', offset: 0},
       {
         opacity: 0,
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') +
-        (translateOffsetBig ? FADE_BIG_START_OFFSET : FADE_START_OFFSET) + ')',
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + translateOffset + ')',
         offset: 1.0
       },
-      translateOffsetBig ? ANIMATION_BIG_DURATION : ANIMATION_DURATION
+      duration
     );
   }
 
-  private static fadeFactory(expr: string, from: any, to: any, animationDuration: number) {
-    return transition(expr, [animate(animationDuration, keyframes([style(from), style(to)]))]);
+  private static fadeFactory(expr: string, from: any, to: any, duration: number) {
+    return transition(expr, [animate(duration, keyframes([style(from), style(to)]))]);
   }
 
 }
