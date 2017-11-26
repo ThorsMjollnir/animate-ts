@@ -1,21 +1,22 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
-  Output,
-  ChangeDetectorRef
+  Output
 } from '@angular/core';
-import {AnimationEvent, state, style, trigger} from '@angular/animations';
+import {AnimationEvent, trigger} from '@angular/animations';
 import {AnimateActionAlias, AnimateActionEnum} from './animate-action.enum';
-import {AnimateFrame} from './animate-frame.class';
-import {AnimateFades} from './animate-fades.class';
-import {ANIMATION_BIG_DURATION, ANIMATION_DURATION, FADE_BIG_START_OFFSET, FADE_START_OFFSET} from "./animate.config";
+import {AnimateFrame} from './animate-frame';
+import {AnimateFades} from './animate-fades';
+import {ANIMATION_BIG_DURATION, ANIMATION_DURATION, FADE_BIG_START_OFFSET, FADE_START_OFFSET} from './animate.config';
+import {AnimateStatic} from './animate-static';
 
 export const AnimateTransitions = [
-  state(AnimateActionEnum.Visible, style({opacity: 1})),
-  state(AnimateActionEnum.Hidden, style({opacity: 0})),
+  AnimateStatic.visible(AnimateActionEnum.Visible),
+  AnimateStatic.hidden(AnimateActionEnum.Hidden),
   AnimateFades.fadeIn('* => ' + AnimateActionEnum.FadeIn, ANIMATION_DURATION),
   AnimateFades.fadeInUp('* => ' + AnimateActionEnum.FadeInUp, FADE_START_OFFSET, ANIMATION_DURATION),
   AnimateFades.fadeInUp('* => ' + AnimateActionEnum.FadeInUpBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
@@ -32,7 +33,7 @@ export const AnimateTransitions = [
   AnimateFades.fadeOutRight('* => ' + AnimateActionEnum.FadeOutRightBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
   AnimateFades.fadeOutDown('* => ' + AnimateActionEnum.FadeOutDown, FADE_START_OFFSET, ANIMATION_DURATION),
   AnimateFades.fadeOutDown('* => ' + AnimateActionEnum.FadeOutDownBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
-  AnimateFades.fadeOutLeft('* => ' + AnimateActionEnum.FadeOutLeft, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFades.fadeOutLeft('* => ' + AnimateActionEnum.FadeOutLeft, FADE_START_OFFSET, ANIMATION_DURATION),
   AnimateFades.fadeOutLeft('* => ' + AnimateActionEnum.FadeOutLeftBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
 ];
 
