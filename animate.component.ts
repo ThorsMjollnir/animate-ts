@@ -13,6 +13,7 @@ import {AnimateFrame} from './animate-frame';
 import {AnimateFade} from './animate-fade';
 import {ANIMATION_BIG_DURATION, ANIMATION_DURATION, FADE_BIG_START_OFFSET, FADE_START_OFFSET} from './animate.config';
 import {AnimateStatic} from './animate-static';
+import {ieLt10} from "../app/shared/utils/get-internet-explorer-version";
 
 export const AnimateTransitions = [
   AnimateStatic.visible(AnimateActionEnum.Visible),

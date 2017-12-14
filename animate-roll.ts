@@ -19,7 +19,7 @@ export class AnimateRoll {
     );
   }
 
-  private static rollOutFactory(expr, duration: number = ANIMATION_DURATION) {
+  private static rollOutFactory(expr: string, duration: number = ANIMATION_DURATION) {
     return AnimateRoll.transitionFactory(expr,
       {height: '*'},
       {height: 0},

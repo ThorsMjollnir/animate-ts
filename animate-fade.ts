@@ -56,7 +56,7 @@ export class AnimateFade {
     );
   }
 
-  private static fadeOutFactory(expr, axis: string, translateOffsetNegative: boolean,
+  private static fadeOutFactory(expr: string, axis: string, translateOffsetNegative: boolean,
                                 translateOffset: string = FADE_START_OFFSET,
                                 duration: number = ANIMATION_DURATION) {
     return AnimateFade.transitionFactory(expr,
