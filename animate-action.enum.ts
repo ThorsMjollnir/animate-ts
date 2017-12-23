@@ -91,4 +91,10 @@ export class AnimateActionAlias {
     return animateActionEnum != null ? AnimateActionAlias.aliasMap.get(animateActionEnum) : undefined;
   }
 
+  static isEqual(animationEnum1: AnimateActionEnum, animationEnum2: AnimateActionEnum): boolean {
+    const a1 = AnimateActionAlias.getItem(animationEnum1);
+    const a2 = AnimateActionAlias.getItem(animationEnum2);
+    return a1 === a2;
+  }
+
 }
