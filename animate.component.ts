@@ -72,7 +72,7 @@ export class AnimateComponent implements OnInit {
 
   set actionQueue(act: AnimateFrame[] | undefined) {
     this._actionQueue = act;
-    this.actionQueueChange.emit(this.action);
+    this.actionQueueChange.emit(this._actionQueue);
     this.startAnimationQueue();
   }
 
