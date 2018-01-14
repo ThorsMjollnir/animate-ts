@@ -1,5 +1,5 @@
 import {animate, keyframes, style, transition} from '@angular/animations';
-import {ANIMATION_DURATION, FADE_START_OFFSET} from './animate.config';
+import {ANIMATION_DURATION} from './animate.config';
 
 export class AnimateRoll {
 
