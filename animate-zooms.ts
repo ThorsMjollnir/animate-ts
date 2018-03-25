@@ -1,17 +1,39 @@
-import {AnimationTransitionMetadata, transition, animate, keyframes, style} from '@angular/animations';
-import {AnimateActionEnum} from './animate-action.enum';
+import {animate, keyframes, style, transition} from '@angular/animations';
 import {ANIMATION_DURATION} from './animate.config';
 
 export class AnimateZooms {
-  static get animations(): ReadonlyArray<AnimationTransitionMetadata> {
-    return [
-      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.ZoomIn, [
-        animate(ANIMATION_DURATION, keyframes([
-          style({opacity: 0, transform: 'scale(0)'}),
-          style({opacity: 1, transform: 'scale(1.1)'}),
-          style({opacity: 1, transform: 'scale(1)'})
-        ]))
-      ])
-    ];
+  static in(expr: string, duration: number = ANIMATION_DURATION) {
+    return AnimateZooms.zoomInFactory(expr, duration);
   }
+
+  static out(expr: string, duration: number = ANIMATION_DURATION) {
+    return AnimateZooms.zoomOutFactory(expr, duration);
+  }
+
+  private static zoomInFactory(expr: string, duration: number) {
+    return AnimateZooms.transitionFactory(expr,
+      [
+        style({opacity: 0, transform: 'scale(0)'}),
+        style({opacity: 1, transform: 'scale(1.1)'}),
+        style({opacity: 1, transform: 'scale(1)'})
+      ],
+      duration
+    );
+  }
+
+  private static zoomOutFactory(expr: string, duration: number = ANIMATION_DURATION) {
+    return AnimateZooms.transitionFactory(expr,
+      [
+        style({opacity: 1, transform: 'scale(1)'}),
+        style({opacity: 1, transform: 'scale(1.1)'}),
+        style({opacity: 0, transform: 'scale(0)'})
+      ],
+      duration
+    );
+  }
+
+  private static transitionFactory(expr: string, styles: any[], duration: number) {
+    return transition(expr, [animate(duration, keyframes(styles))]);
+  }
+
 }
