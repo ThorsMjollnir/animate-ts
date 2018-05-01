@@ -32,6 +32,7 @@ export enum AnimateActionEnum {
   BounceInRightBig = 'bounceInRightBig',
 
   BounceOutUp = 'bounceOutUp',
+  BouncOutUpBig = 'bounceOutUpBig',
   BounceOutDown = 'bounceOutDown',
   BounceOutDownBig = 'bounceOutDownBig',
   BounceOutLeft = 'bounceOutLeft',
@@ -39,7 +40,8 @@ export enum AnimateActionEnum {
   BounceOutRight = 'bounceOutRight',
   BounceOutRightBig = 'bounceOutRightBig',
 
-  ZoomIn = 'zoomIn'
+  ZoomIn = 'zoomIn',
+  ZoomOut = 'zoomOut'
 }
 
 export class AnimateActionAlias {

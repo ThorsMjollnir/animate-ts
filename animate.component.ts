@@ -11,34 +11,65 @@ import {AnimationEvent, trigger} from '@angular/animations';
 import {AnimateActionAlias, AnimateActionEnum} from './animate-action.enum';
 import {AnimateFrame} from './animate-frame';
 import {AnimateFade} from './animate-fade';
-import {ANIMATION_BIG_DURATION, ANIMATION_DURATION, FADE_BIG_START_OFFSET, FADE_START_OFFSET} from './animate.config';
+import {
+  ANIMATION_BIG_DURATION,
+  ANIMATION_DURATION,
+  FADE_BIG_START_OFFSET, FADE_BOUNCE_OFFSET,
+  FADE_BOUNCE_START_FRAME_OFFSET,
+  FADE_START_OFFSET
+} from './animate.config';
 import {AnimateStatic} from './animate-static';
+import {AnimateZooms} from "./animate-zooms";
+import {AnimateBounce} from "./animate-bounces";
+
+const inExpr = '* => ';
 
 export const AnimateTransitions = [
   AnimateStatic.visible(AnimateActionEnum.Visible),
   AnimateStatic.hidden(AnimateActionEnum.Hidden),
-  AnimateFade.fadeIn('* => ' + AnimateActionEnum.FadeIn, ANIMATION_DURATION),
-  AnimateFade.inUp('* => ' + AnimateActionEnum.FadeInUp, FADE_START_OFFSET, ANIMATION_DURATION),
-  AnimateFade.inUp('* => ' + AnimateActionEnum.FadeInUpBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
-  AnimateFade.inRight('* => ' + AnimateActionEnum.FadeInRight, FADE_START_OFFSET, ANIMATION_DURATION),
-  AnimateFade.inRight('* => ' + AnimateActionEnum.FadeInRightBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
-  AnimateFade.inDown('* => ' + AnimateActionEnum.FadeInDown, FADE_START_OFFSET, ANIMATION_DURATION),
-  AnimateFade.inDown('* => ' + AnimateActionEnum.FadeInDownBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
-  AnimateFade.inLeft('* => ' + AnimateActionEnum.FadeInLeft, FADE_START_OFFSET, ANIMATION_DURATION),
-  AnimateFade.inLeft('* => ' + AnimateActionEnum.FadeInLeftBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
-  AnimateFade.fadeOut('* => ' + AnimateActionEnum.FadeOut, ANIMATION_DURATION),
-  AnimateFade.outUp('* => ' + AnimateActionEnum.FadeOutUp, FADE_START_OFFSET, ANIMATION_DURATION),
-  AnimateFade.outUp('* => ' + AnimateActionEnum.FadeOutUpBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
-  AnimateFade.outRight('* => ' + AnimateActionEnum.FadeOutRight, FADE_START_OFFSET, ANIMATION_DURATION),
-  AnimateFade.outRight('* => ' + AnimateActionEnum.FadeOutRightBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
-  AnimateFade.outDown('* => ' + AnimateActionEnum.FadeOutDown, FADE_START_OFFSET, ANIMATION_DURATION),
-  AnimateFade.outDown('* => ' + AnimateActionEnum.FadeOutDownBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
-  AnimateFade.outLeft('* => ' + AnimateActionEnum.FadeOutLeft, FADE_START_OFFSET, ANIMATION_DURATION),
-  AnimateFade.outLeft('* => ' + AnimateActionEnum.FadeOutLeftBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+
+  AnimateFade.fadeIn(inExpr + AnimateActionEnum.FadeIn, ANIMATION_DURATION),
+  AnimateFade.inUp(inExpr + AnimateActionEnum.FadeInUp, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFade.inUp(inExpr + AnimateActionEnum.FadeInUpBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFade.inRight(inExpr + AnimateActionEnum.FadeInRight, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFade.inRight(inExpr + AnimateActionEnum.FadeInRightBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFade.inDown(inExpr + AnimateActionEnum.FadeInDown, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFade.inDown(inExpr + AnimateActionEnum.FadeInDownBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFade.inLeft(inExpr + AnimateActionEnum.FadeInLeft, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFade.inLeft(inExpr + AnimateActionEnum.FadeInLeftBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFade.fadeOut(inExpr + AnimateActionEnum.FadeOut, ANIMATION_DURATION),
+  AnimateFade.outUp(inExpr + AnimateActionEnum.FadeOutUp, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFade.outUp(inExpr + AnimateActionEnum.FadeOutUpBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFade.outRight(inExpr + AnimateActionEnum.FadeOutRight, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFade.outRight(inExpr + AnimateActionEnum.FadeOutRightBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFade.outDown(inExpr + AnimateActionEnum.FadeOutDown, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFade.outDown(inExpr + AnimateActionEnum.FadeOutDownBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateFade.outLeft(inExpr + AnimateActionEnum.FadeOutLeft, FADE_START_OFFSET, ANIMATION_DURATION),
+  AnimateFade.outLeft(inExpr + AnimateActionEnum.FadeOutLeftBig, FADE_BIG_START_OFFSET, ANIMATION_BIG_DURATION),
+
+  AnimateBounce.inUp(inExpr + AnimateActionEnum.BounceInUp, FADE_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_DURATION),
+  AnimateBounce.inUp(inExpr + AnimateActionEnum.BounceInUpBig, FADE_BIG_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateBounce.inRight(inExpr + AnimateActionEnum.BounceInRight, FADE_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_DURATION),
+  AnimateBounce.inRight(inExpr + AnimateActionEnum.BounceInRightBig, FADE_BIG_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateBounce.inDown(inExpr + AnimateActionEnum.BounceInDown, FADE_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_DURATION),
+  AnimateBounce.inDown(inExpr + AnimateActionEnum.BounceInDownBig, FADE_BIG_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateBounce.inLeft(inExpr + AnimateActionEnum.BounceInLeft, FADE_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_DURATION),
+  AnimateBounce.inLeft(inExpr + AnimateActionEnum.BounceInLeftBig, FADE_BIG_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateBounce.outUp(inExpr + AnimateActionEnum.BounceOutUp, FADE_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_DURATION),
+  AnimateBounce.outUp(inExpr + AnimateActionEnum.BouncOutUpBig, FADE_BIG_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateBounce.outRight(inExpr + AnimateActionEnum.BounceOutRight, FADE_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_DURATION),
+  AnimateBounce.outRight(inExpr + AnimateActionEnum.BounceOutRightBig, FADE_BIG_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateBounce.outDown(inExpr + AnimateActionEnum.BounceOutDown, FADE_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_DURATION),
+  AnimateBounce.outDown(inExpr + AnimateActionEnum.BounceOutDownBig, FADE_BIG_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_BIG_DURATION),
+  AnimateBounce.outLeft(inExpr + AnimateActionEnum.BounceOutLeft, FADE_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_DURATION),
+  AnimateBounce.outLeft(inExpr + AnimateActionEnum.BounceOutLeftBig, FADE_BIG_START_OFFSET, FADE_BOUNCE_OFFSET, ANIMATION_BIG_DURATION),
+
+  AnimateZooms.in(inExpr + AnimateActionEnum.ZoomIn, ANIMATION_DURATION),
+  AnimateZooms.out(inExpr + AnimateActionEnum.ZoomOut, ANIMATION_DURATION)
 ];
 
 @Component({
-  selector: 'anm',
+  selector: 'anm-c',
   templateUrl: './animate.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [

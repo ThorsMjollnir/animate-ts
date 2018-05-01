@@ -1,192 +1,91 @@
-import {transition, animate, keyframes, style, AnimationTransitionMetadata} from '@angular/animations';
-import {AnimateActionEnum} from './animate-action.enum';
+import {animate, keyframes, style, transition} from '@angular/animations';
 import {
-  ANIMATION_DURATION, FADE_START_OFFSET, FADE_BOUNCE_OFFSET,
-  FADE_BOUNCE_START_FRAME_OFFSET, ANIMATION_BIG_DURATION, FADE_BIG_START_OFFSET
+  ANIMATION_BIG_DURATION,
+  ANIMATION_DURATION, FADE_BIG_START_OFFSET,
+  FADE_BOUNCE_OFFSET,
+  FADE_BOUNCE_START_FRAME_OFFSET,
+  FADE_START_OFFSET
 } from './animate.config';
+import {AnmAxis} from "./types";
 
-export class AnimateBounces {
-  static get animations(): ReadonlyArray<AnimationTransitionMetadata> {
-    return [
-      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInUp, [
-        animate(ANIMATION_DURATION, keyframes([
-          style({opacity: 0, transform: 'translateY(' + FADE_START_OFFSET + ')', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateY(-' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-        ]))
-      ]),
+export class AnimateBounce {
 
-      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInUpBig, [
-        animate(ANIMATION_BIG_DURATION, keyframes([
-          style({opacity: 0, transform: 'translateY(' + FADE_BIG_START_OFFSET + ')', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateY(-' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInDown, [
-        animate(ANIMATION_DURATION, keyframes([
-          style({opacity: 0, transform: 'translateY(-' + FADE_START_OFFSET + ')', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateY(' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInDownBig, [
-        animate(ANIMATION_BIG_DURATION, keyframes([
-          style({opacity: 0, transform: 'translateY(-' + FADE_BIG_START_OFFSET + ')', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateY(' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInLeft, [
-        animate(ANIMATION_DURATION, keyframes([
-          style({opacity: 0, transform: 'translateX(-' + FADE_START_OFFSET + ')', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateX(' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInLeftBig, [
-        animate(ANIMATION_BIG_DURATION, keyframes([
-          style({opacity: 0, transform: 'translateX(-' + FADE_BIG_START_OFFSET + ')', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateX(' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutLeft, [
-        animate(ANIMATION_DURATION, keyframes([
-          style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateX(' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 0, transform: 'translateX(-' + FADE_START_OFFSET + ')', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutUp, [
-        animate(ANIMATION_DURATION, keyframes([
-          style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateY(' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 0, transform: 'translateY(-' + FADE_START_OFFSET + ')', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutDown, [
-        animate(ANIMATION_DURATION, keyframes([
-          style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateY(-' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 0, transform: 'translateY(' + FADE_START_OFFSET + ')', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutDownBig, [
-        animate(ANIMATION_BIG_DURATION, keyframes([
-          style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateY(-' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 0, transform: 'translateY(' + FADE_BIG_START_OFFSET + ')', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutLeftBig, [
-        animate(ANIMATION_BIG_DURATION, keyframes([
-          style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateX(' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 0, transform: 'translateX(-' + FADE_BIG_START_OFFSET + ')', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInRight, [
-        animate(ANIMATION_DURATION, keyframes([
-          style({opacity: 0, transform: 'translateX(' + FADE_START_OFFSET + ')', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateX(-' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Hidden + '=>' + AnimateActionEnum.BounceInRightBig, [
-        animate(ANIMATION_BIG_DURATION, keyframes([
-          style({opacity: 0, transform: 'translateX(' + FADE_BIG_START_OFFSET + ')', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateX(-' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 1, transform: 'translate(0,0)', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutRight, [
-        animate(ANIMATION_DURATION, keyframes([
-          style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateX(-' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 0, transform: 'translateX(' + FADE_START_OFFSET + ')', offset: 1.0})
-        ]))
-      ]),
-
-      transition(AnimateActionEnum.Visible + '=>' + AnimateActionEnum.BounceOutRightBig, [
-        animate(ANIMATION_BIG_DURATION, keyframes([
-          style({opacity: 1, transform: 'translate(0,0)', offset: 0}),
-          style({
-            opacity: 1,
-            transform: 'translateX(-' + FADE_BOUNCE_OFFSET + ')',
-            offset: FADE_BOUNCE_START_FRAME_OFFSET
-          }),
-          style({opacity: 0, transform: 'translateX(' + FADE_BIG_START_OFFSET + ')', offset: 1.0})
-        ]))
-      ])
-    ];
+  static inUp(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
+    return AnimateBounce.bounceInFactory(expr, 'Y', false, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
   }
+
+  static inDown(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
+    return AnimateBounce.bounceInFactory(expr, 'Y', true, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  }
+
+  static inLeft(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
+    return AnimateBounce.bounceInFactory(expr, 'X', true, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  }
+
+  static inRight(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
+    return AnimateBounce.bounceInFactory(expr, 'X', false, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  }
+
+  static outUp(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
+    return AnimateBounce.bounceOutFactory(expr, 'Y', false, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  }
+
+  static outDown(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
+    return AnimateBounce.bounceOutFactory(expr, 'Y', true, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  }
+
+  static outLeft(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
+    return AnimateBounce.bounceOutFactory(expr, 'X', true, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  }
+
+  static outRight(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
+    return AnimateBounce.bounceOutFactory(expr, 'X', false, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  }
+
+  private static bounceInFactory(expr: string, axis: string, translateOffsetNegative: boolean,
+                                 translateOffset: string = FADE_START_OFFSET,
+                                 bounceOffset: string = FADE_BOUNCE_OFFSET,
+                                 bounceFrameOffset: number = FADE_BOUNCE_START_FRAME_OFFSET,
+                                 duration: number) {
+    return AnimateBounce.transitionFactory(expr,
+      {
+        opacity: 0,
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + translateOffset + ')',
+        offset: 0
+      },
+      {
+        opacity: 1,
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + bounceOffset + ')',
+        offset: bounceFrameOffset
+      },
+      {opacity: 1, transform: 'translate(0,0)', offset: 1.0},
+      duration
+    );
+  }
+
+  private static bounceOutFactory(expr: string, axis: AnmAxis, translateOffsetNegative: boolean,
+                                  translateOffset: string = FADE_START_OFFSET,
+                                  bounceOffset: string = FADE_BOUNCE_OFFSET,
+                                  bounceFrameOffset: number = FADE_BOUNCE_START_FRAME_OFFSET,
+                                  duration: number = ANIMATION_DURATION) {
+    return AnimateBounce.transitionFactory(expr,
+      {opacity: 1, transform: 'translate(0,0)', offset: 0},
+      {
+        opacity: 1,
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + bounceOffset + ')',
+        offset: bounceFrameOffset
+      },
+      {
+        opacity: 0,
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + translateOffset + ')',
+        offset: 1.0
+      },
+      duration
+    );
+  }
+
+  private static transitionFactory(expr: string, from: any, middle: any, to: any, duration: number) {
+    return transition(expr, [animate(duration, keyframes([style(from), style(middle), style(to)]))]);
+  }
+
 }
