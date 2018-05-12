@@ -1,12 +1,6 @@
 import {animate, keyframes, style, transition} from '@angular/animations';
-import {
-  ANIMATION_BIG_DURATION,
-  ANIMATION_DURATION, FADE_BIG_START_OFFSET,
-  FADE_BOUNCE_OFFSET,
-  FADE_BOUNCE_START_FRAME_OFFSET,
-  FADE_START_OFFSET
-} from './animate.config';
-import {AnmAxis} from "./types";
+import {ANIMATION_DURATION, FADE_BOUNCE_OFFSET, FADE_BOUNCE_START_FRAME_OFFSET, FADE_START_OFFSET} from './animate.config';
+import {AnmAxis} from './types';
 
 export class AnimateBounce {
 
