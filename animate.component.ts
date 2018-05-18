@@ -95,14 +95,14 @@ export class AnimateComponent implements OnInit {
 
   @Input() display: boolean;
 
-  @Output() started: EventEmitter<any> = new EventEmitter();
-  @Output() done: EventEmitter<any> = new EventEmitter();
+  @Output() started = new EventEmitter();
+  @Output() done = new EventEmitter();
 
-  @Output() onShown: EventEmitter<any> = new EventEmitter();
-  @Output() onHidden: EventEmitter<any> = new EventEmitter();
+  @Output() onShown = new EventEmitter();
+  @Output() onHidden = new EventEmitter();
 
-  @Output() beforeShown: EventEmitter<any> = new EventEmitter();
-  @Output() beforeHidden: EventEmitter<any> = new EventEmitter();
+  @Output() beforeShown = new EventEmitter();
+  @Output() beforeHidden = new EventEmitter();
 
   displayed: boolean;
 
