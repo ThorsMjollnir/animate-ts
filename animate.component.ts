@@ -93,7 +93,7 @@ export class AnimateComponent implements OnInit {
     this.startAnimationQueue();
   }
 
-  @Input() display: boolean;
+  @Input() display = false;
 
   @Output() started = new EventEmitter();
   @Output() done = new EventEmitter();
@@ -104,7 +104,7 @@ export class AnimateComponent implements OnInit {
   @Output() beforeShown = new EventEmitter();
   @Output() beforeHidden = new EventEmitter();
 
-  displayed: boolean;
+  displayed = false;
 
   constructor(private changeDetector: ChangeDetectorRef) {
   }
