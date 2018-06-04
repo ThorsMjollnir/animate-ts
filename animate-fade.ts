@@ -1,6 +1,6 @@
 import {animate, keyframes, style, transition} from '@angular/animations';
 import {ANIMATION_DURATION, FADE_START_OFFSET} from './animate.config';
-import {AnmAxis} from './types';
+import {AnmAxis, StyleTokens} from './types';
 
 export class AnimateFade {
 
@@ -71,7 +71,7 @@ export class AnimateFade {
     );
   }
 
-  private static transitionFactory(expr: string, from: any, to: any, duration: number) {
+  private static transitionFactory(expr: string, from: StyleTokens, to: StyleTokens, duration: number) {
     return transition(expr, [animate(duration, keyframes([style(from), style(to)]))]);
   }
 

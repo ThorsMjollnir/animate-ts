@@ -1,5 +1,6 @@
 import {animate, keyframes, style, transition} from '@angular/animations';
 import {ANIMATION_DURATION} from './animate.config';
+import {StyleTokens} from './types';
 
 export class AnimateRoll {
 
@@ -27,7 +28,7 @@ export class AnimateRoll {
     );
   }
 
-  private static transitionFactory(expr: string, from: any, to: any, duration: number) {
+  private static transitionFactory(expr: string, from: StyleTokens, to: StyleTokens, duration: number) {
     return transition(expr, [animate(duration, keyframes([style(from), style(to)]))]);
   }
 

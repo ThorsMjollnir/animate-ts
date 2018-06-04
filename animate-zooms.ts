@@ -1,5 +1,6 @@
 import {animate, keyframes, style, transition} from '@angular/animations';
 import {ANIMATION_DURATION} from './animate.config';
+import {AnimationStyleMetadata} from '@angular/animations/src/animation_metadata';
 
 export class AnimateZooms {
   static in(expr: string, duration: number = ANIMATION_DURATION) {
@@ -32,7 +33,7 @@ export class AnimateZooms {
     );
   }
 
-  private static transitionFactory(expr: string, styles: any[], duration: number) {
+  private static transitionFactory(expr: string, styles: AnimationStyleMetadata[], duration: number) {
     return transition(expr, [animate(duration, keyframes(styles))]);
   }
 
