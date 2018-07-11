@@ -1,80 +1,93 @@
 import {animate, keyframes, style, transition} from '@angular/animations';
-import {ANIMATION_DURATION, FADE_BOUNCE_OFFSET, FADE_BOUNCE_START_FRAME_OFFSET, FADE_START_OFFSET} from './animate.config';
+import {ANIMATION_DURATION, BOUNCE_OFFSET, BOUNCE_START_FRAME_OFFSET, TRANSLATE_OFFSET} from './animate.config';
 import {AnmAxis, StyleTokens} from './types';
+
+interface AnimateBounceConfigReq {
+  readonly translateOffset: string;
+  readonly bounceOffset: string;
+  readonly duration: number;
+  readonly bounceFrameOffset: number;
+}
+
+export type AnimateBounceConfig = {[K in keyof AnimateBounceConfigReq]?: AnimateBounceConfig[K]};
+
+function configOrDefault(config?: AnimateBounceConfig): AnimateBounceConfigReq {
+  const cf: AnimateBounceConfig = config || {};
+  return {
+    bounceOffset: cf.bounceOffset || BOUNCE_OFFSET,
+    duration: cf.duration || ANIMATION_DURATION,
+    translateOffset: cf.translateOffset || TRANSLATE_OFFSET,
+    bounceFrameOffset: cf.bounceFrameOffset || BOUNCE_START_FRAME_OFFSET
+  };
+}
 
 export class AnimateBounce {
 
-  static inUp(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
-    return AnimateBounce.bounceInFactory(expr, 'Y', false, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  static inUp(expr: string, config?: AnimateBounceConfig) {
+    return AnimateBounce.bounceInFactory(expr, 'Y', false, config);
   }
 
-  static inDown(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
-    return AnimateBounce.bounceInFactory(expr, 'Y', true, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  static inDown(expr: string, config?: AnimateBounceConfig) {
+    return AnimateBounce.bounceInFactory(expr, 'Y', true, config);
   }
 
-  static inLeft(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
-    return AnimateBounce.bounceInFactory(expr, 'X', true, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  static inLeft(expr: string, config?: AnimateBounceConfig) {
+    return AnimateBounce.bounceInFactory(expr, 'X', true, config);
   }
 
-  static inRight(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
-    return AnimateBounce.bounceInFactory(expr, 'X', false, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  static inRight(expr: string, config?: AnimateBounceConfig) {
+    return AnimateBounce.bounceInFactory(expr, 'X', false, config);
   }
 
-  static outUp(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
-    return AnimateBounce.bounceOutFactory(expr, 'Y', false, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  static outUp(expr: string, config?: AnimateBounceConfig) {
+    return AnimateBounce.bounceOutFactory(expr, 'Y', false, config);
   }
 
-  static outDown(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
-    return AnimateBounce.bounceOutFactory(expr, 'Y', true, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  static outDown(expr: string, config?: AnimateBounceConfig) {
+    return AnimateBounce.bounceOutFactory(expr, 'Y', true, config);
   }
 
-  static outLeft(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
-    return AnimateBounce.bounceOutFactory(expr, 'X', true, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  static outLeft(expr: string, config?: AnimateBounceConfig) {
+    return AnimateBounce.bounceOutFactory(expr, 'X', true, config);
   }
 
-  static outRight(expr: string, translateOffset: string = FADE_START_OFFSET, bounceOffset: string = FADE_BOUNCE_OFFSET, duration: number = ANIMATION_DURATION) {
-    return AnimateBounce.bounceOutFactory(expr, 'X', false, translateOffset, bounceOffset, FADE_BOUNCE_START_FRAME_OFFSET, duration);
+  static outRight(expr: string, config?: AnimateBounceConfig) {
+    return AnimateBounce.bounceOutFactory(expr, 'X', false, config);
   }
 
-  private static bounceInFactory(expr: string, axis: string, translateOffsetNegative: boolean,
-                                 translateOffset: string = FADE_START_OFFSET,
-                                 bounceOffset: string = FADE_BOUNCE_OFFSET,
-                                 bounceFrameOffset: number = FADE_BOUNCE_START_FRAME_OFFSET,
-                                 duration: number) {
+  private static bounceInFactory(expr: string, axis: string, translateOffsetNegative: boolean, config?: AnimateBounceConfig) {
+    const cf = configOrDefault(config);
     return AnimateBounce.transitionFactory(expr,
       {
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + cf.translateOffset + ')',
+        offset: 0,
         opacity: 0,
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + translateOffset + ')',
-        offset: 0
       },
       {
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '' : '-') + cf.bounceOffset + ')',
+        offset: cf.bounceFrameOffset,
         opacity: 1,
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + bounceOffset + ')',
-        offset: bounceFrameOffset
       },
-      {opacity: 1, transform: 'translate(0,0)', offset: 1.0},
-      duration
+      {transform: 'translate(0,0)', offset: 1.0, opacity: 1},
+      cf.duration
     );
   }
 
-  private static bounceOutFactory(expr: string, axis: AnmAxis, translateOffsetNegative: boolean,
-                                  translateOffset: string = FADE_START_OFFSET,
-                                  bounceOffset: string = FADE_BOUNCE_OFFSET,
-                                  bounceFrameOffset: number = FADE_BOUNCE_START_FRAME_OFFSET,
-                                  duration: number = ANIMATION_DURATION) {
+  private static bounceOutFactory(expr: string, axis: AnmAxis, translateOffsetNegative: boolean, config?: AnimateBounceConfig) {
+    const cf = configOrDefault(config);
     return AnimateBounce.transitionFactory(expr,
-      {opacity: 1, transform: 'translate(0,0)', offset: 0},
+      {transform: 'translate(0,0)', offset: 0, opacity: 1},
       {
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + cf.bounceOffset + ')',
+        offset: cf.bounceFrameOffset,
         opacity: 1,
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + bounceOffset + ')',
-        offset: bounceFrameOffset
       },
       {
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '' : '-') + cf.translateOffset + ')',
+        offset: 1.0,
         opacity: 0,
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + translateOffset + ')',
-        offset: 1.0
       },
-      duration
+      cf.duration
     );
   }
 
