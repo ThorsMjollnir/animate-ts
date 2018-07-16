@@ -1,3 +1,9 @@
+/**
+ * !!!READ CAREFULLY!!!
+ * In this library code is written in a way to be compiled in AOT mode.
+ * Even slight changes may result in error on the build stage
+ */
+
 import {animate, keyframes, style, transition} from '@angular/animations';
 import {ANIMATION_DURATION, BOUNCE_OFFSET, BOUNCE_START_FRAME_OFFSET, TRANSLATE_OFFSET} from './animate.config';
 import {AnmAxis, StyleTokens} from './types';
@@ -10,16 +16,6 @@ interface AnimateBounceConfigReq {
 }
 
 export type AnimateBounceConfig = {[K in keyof AnimateBounceConfigReq]?: AnimateBounceConfig[K]};
-
-function configOrDefault(config?: AnimateBounceConfig): AnimateBounceConfigReq {
-  const cf: AnimateBounceConfig = config || {};
-  return {
-    bounceOffset: cf.bounceOffset || BOUNCE_OFFSET,
-    duration: cf.duration || ANIMATION_DURATION,
-    translateOffset: cf.translateOffset || TRANSLATE_OFFSET,
-    bounceFrameOffset: cf.bounceFrameOffset || BOUNCE_START_FRAME_OFFSET
-  };
-}
 
 export class AnimateBounce {
 
@@ -56,43 +52,50 @@ export class AnimateBounce {
   }
 
   private static bounceInFactory(expr: string, axis: string, translateOffsetNegative: boolean, config?: AnimateBounceConfig) {
-    const cf = configOrDefault(config);
     return AnimateBounce.transitionFactory(expr,
       {
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + cf.translateOffset + ')',
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + AnimateBounce.configOrDefault(config).translateOffset + ')',
         offset: 0,
         opacity: 0,
       },
       {
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '' : '-') + cf.bounceOffset + ')',
-        offset: cf.bounceFrameOffset,
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '' : '-') + AnimateBounce.configOrDefault(config).bounceOffset + ')',
+        offset: AnimateBounce.configOrDefault(config).bounceFrameOffset,
         opacity: 1,
       },
       {transform: 'translate(0,0)', offset: 1.0, opacity: 1},
-      cf.duration
+      AnimateBounce.configOrDefault(config).duration
     );
   }
 
   private static bounceOutFactory(expr: string, axis: AnmAxis, translateOffsetNegative: boolean, config?: AnimateBounceConfig) {
-    const cf = configOrDefault(config);
     return AnimateBounce.transitionFactory(expr,
       {transform: 'translate(0,0)', offset: 0, opacity: 1},
       {
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + cf.bounceOffset + ')',
-        offset: cf.bounceFrameOffset,
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '-' : '') + AnimateBounce.configOrDefault(config).bounceOffset + ')',
+        offset: AnimateBounce.configOrDefault(config).bounceFrameOffset,
         opacity: 1,
       },
       {
-        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '' : '-') + cf.translateOffset + ')',
+        transform: 'translate' + axis + '(' + (translateOffsetNegative ? '' : '-') + AnimateBounce.configOrDefault(config).translateOffset + ')',
         offset: 1.0,
         opacity: 0,
       },
-      cf.duration
+      AnimateBounce.configOrDefault(config).duration
     );
   }
 
   private static transitionFactory(expr: string, from: StyleTokens, middle: StyleTokens, to: StyleTokens, duration: number) {
     return transition(expr, [animate(duration, keyframes([style(from), style(middle), style(to)]))]);
+  }
+
+  private static configOrDefault(config?: AnimateBounceConfig): AnimateBounceConfigReq {
+    return {
+      bounceOffset: config && config.bounceOffset ? config.bounceOffset : BOUNCE_OFFSET,
+      duration: config && config.duration ? config.duration : ANIMATION_DURATION,
+      translateOffset: config && config.translateOffset ? config.translateOffset : TRANSLATE_OFFSET,
+      bounceFrameOffset: config && config.bounceFrameOffset ? config.bounceFrameOffset : BOUNCE_START_FRAME_OFFSET
+    };
   }
 
 }

@@ -1,3 +1,9 @@
+/**
+ * !!!READ CAREFULLY!!!
+ * In this library code is written in a way to be compiled in AOT mode.
+ * Even slight changes may result in error on the build stage
+ */
+
 import {animate, keyframes, style, transition} from '@angular/animations';
 import {ANIMATION_DURATION} from './animate.config';
 import {AnimationStyleMetadata} from '@angular/animations/src/animation_metadata';

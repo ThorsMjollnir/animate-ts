@@ -1,12 +1,18 @@
+/**
+ * !!!READ CAREFULLY!!!
+ * In this library code is written in a way to be compiled in AOT mode.
+ * Even slight changes may result in error on the build stage
+ */
+
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AnimationEvent, trigger} from '@angular/animations';
 import {AnimateActionAlias, AnimateActionEnum} from './animate-action.enum';
 import {AnimateFrame} from './animate-frame';
 import {AnimateFade} from './animate-fade';
-import {ANIMATION_DURATION} from './animate.config';
 import {AnimateStatic} from './animate-static';
-import {AnimateZooms} from './animate-zooms';
 import {AnimateBounce} from './animate-bounces';
+import {AnimateZooms} from './animate-zooms';
+import {ANIMATION_DURATION} from './animate.config';
 
 const inExpr = '* => ';
 
