@@ -87,6 +87,8 @@ export class AnimateActionAlias {
     [AnimateActionEnum.BounceOutLeftBig, AnimateActionEnum.Hidden],
     [AnimateActionEnum.BounceOutRight, AnimateActionEnum.Hidden],
     [AnimateActionEnum.BounceOutRightBig, AnimateActionEnum.Hidden],
+
+    [AnimateActionEnum.ZoomOut, AnimateActionEnum.Hidden],
   ]);
 
   static getItem(animateActionEnum: AnimateActionEnum | undefined): AnimateActionEnum | undefined {
