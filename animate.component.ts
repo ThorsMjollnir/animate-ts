@@ -84,6 +84,7 @@ export class AnimateComponent implements OnInit {
   set action(act: AnimateActionEnum | undefined) {
     this.actionValue = act;
     this.actionChange.emit(this.actionValue);
+    this.changeDetector.markForCheck();
   }
 
   @Input()
