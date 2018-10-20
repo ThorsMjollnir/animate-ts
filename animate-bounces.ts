@@ -8,14 +8,14 @@ import {animate, keyframes, style, transition} from '@angular/animations';
 import {ANIMATION_DURATION, BOUNCE_OFFSET, BOUNCE_START_FRAME_OFFSET, TRANSLATE_OFFSET} from './animate.config';
 import {AnmAxis, StyleTokens} from './types';
 
-interface AnimateBounceConfigReq {
-  readonly translateOffset: string;
-  readonly bounceOffset: string;
-  readonly duration: number;
-  readonly bounceFrameOffset: number;
-}
+type AnimateBounceConfigReq = Readonly<{
+  translateOffset: string,
+  bounceOffset: string,
+  duration: number,
+  bounceFrameOffset: number
+}>;
 
-export type AnimateBounceConfig = {[K in keyof AnimateBounceConfigReq]?: AnimateBounceConfig[K]};
+export type AnimateBounceConfig = {[K in keyof AnimateBounceConfigReq]?: AnimateBounceConfigReq[K]};
 
 export class AnimateBounce {
 
