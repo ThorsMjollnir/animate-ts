@@ -164,7 +164,7 @@ export class AnimateComponent implements OnInit {
     if (this.actionQueue != null && this.actionQueue.length > 0) {
       this.startAnimationQueue();
     } else {
-      this.action = AnimateActionAlias.getItem(this.action);
+      this.actionValue = AnimateActionAlias.getItem(this.action);
     }
   }
 
